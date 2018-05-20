@@ -9,12 +9,16 @@ export class SearchWrapper extends React.Component {
   constructor (props, context) {
     super(props, context);
 
-    this.saveFuelSavings = this.saveFuelSavings.bind(this);
+    this.onSearch = this.onSearch.bind(this);
     this.calculateFuelSavings = this.calculateFuelSavings.bind(this);
   }
 
-  saveFuelSavings () {
-    this.props.actions.saveFuelSavings(this.props.fuelSavings);
+  componentDidMount() {
+    this.props.actions.fetchAllListings();
+  }
+
+  onSearch () {
+    this.props.actions.onSearch(this.props.fuelSavings);
   }
 
   calculateFuelSavings (e) {
@@ -24,9 +28,10 @@ export class SearchWrapper extends React.Component {
   render () {
     return (
       <SearchForm
-        onSaveClick={this.saveFuelSavings}
+        onSearch={this.onSearch}
         onChange={this.calculateFuelSavings}
-        fuelSavings={this.props.fuelSavings}
+        query={this.props.query}
+        listings={this.props.listings}
       />
     );
   }
@@ -34,13 +39,12 @@ export class SearchWrapper extends React.Component {
 
 SearchWrapper.propTypes = {
   actions: PropTypes.object.isRequired,
-  fuelSavings: PropTypes.object.isRequired
+  query: PropTypes.string,
+  listings: PropTypes.object.isRequired
 };
 
 function mapStateToProps (state) {
-  return {
-    fuelSavings: state.fuelSavings
-  };
+  return state.fuelSavings;
 }
 
 function mapDispatchToProps (dispatch) {

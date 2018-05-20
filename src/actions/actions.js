@@ -1,8 +1,24 @@
 import * as types from '../constants/actionTypes';
 import {getFormattedDateTime} from '../utils/dates';
-// import fetch from 'cross-fetch';
+import EtsyJsonp from '../utils/etsyApi';
 
-export function saveFuelSavings (settings) { // example of a thunk using the redux-thunk middleware
+const etsyApi = new EtsyJsonp();
+
+export const fetchAllListings = () => {
+  return (dispatch) => {
+    return etsyApi.get({
+      path: 'listings/active',
+      success: (info) => {
+        dispatch({
+          type: types.UPDATE_LISTINGS,
+          data: info.response
+        });
+      }
+    });
+  };
+};
+
+export const onSearch = (settings) => { // example of a thunk using the redux-thunk middleware
   return function (dispatch) {
     // thunks allow for pre-processing actions, calling apis, and dispatching multiple actions
     // in this case at this point we could call a service that would persist the fuel savings
@@ -12,9 +28,9 @@ export function saveFuelSavings (settings) { // example of a thunk using the red
       settings
     });
   };
-}
+};
 
-export function calculateFuelSavings (settings, fieldName, value) {
+export const calculateFuelSavings = (settings, fieldName, value) => {
   return {
     type: types.CALCULATE_FUEL_SAVINGS,
     dateModified: getFormattedDateTime(),
@@ -22,7 +38,7 @@ export function calculateFuelSavings (settings, fieldName, value) {
     fieldName,
     value
   };
-}
+};
 
 // export const fetchListings = () => {
 //   return (dispatch) => {

@@ -22,7 +22,7 @@
     "test:CI": "babel-node tools/testCi.js",
     "test:cover": "npm run test -- --coverage ",
     "test:cover:CI": "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
-    "test:watch": "jest --watch --coverage",
+    "test:watch": "jest --watch",
     "open:cover": "npm run test:cover && opn ./coverage/lcov-report/index.html",
     "analyze-bundle": "babel-node ./tools/analyzeBundle.js"
   },
@@ -30,6 +30,8 @@
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "1.0.0",
+    "axios": "0.18.0",
+    "axios-jsonp": "1.0.1",
     "oauth-client": "0.3.0",
     "object-assign": "4.1.0",
     "react": "16.3.0",

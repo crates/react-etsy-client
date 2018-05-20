@@ -1,32 +1,31 @@
-import {SAVE_FUEL_SAVINGS, CALCULATE_FUEL_SAVINGS} from '../constants/actionTypes';
+import * as types from '../constants/actionTypes';
 import {necessaryDataIsProvidedToCalculateSavings, calculateSavings} from '../utils/etsyHelpers';
 import objectAssign from 'object-assign';
 import initialState from './initialState';
 
-// IMPORTANT: Note that with Redux, state should NEVER be changed directly (as a matter of good practice).
-// State is considered immutable. Instead, create a copy of the state passed and set new values on the copy.
-// Here, we are using Object.assign to create a copy of current state and update values on the copy.
-
-export const appReducer = (state = initialState.fuelSavings, action) => {
+export const appReducer = (state = initialState, action) => {
   let newState;
 
   switch (action.type) {
-    case SAVE_FUEL_SAVINGS:
+    case types.UPDATE_LISTINGS:
+      return objectAssign({}, state, {'listings': action.data});
+
+    case types.SAVE_FUEL_SAVINGS:
       // For this example, just simulating a save by changing date modified.
       // In a real app using Redux, you might use redux-thunk and handle the async call in actions.js
-      return objectAssign({}, state, {dateModified: action.dateModified});
+      return objectAssign({}, state, {'fuelSavings': {dateModified: action.dateModified}});
 
-    case CALCULATE_FUEL_SAVINGS:
+    case types.CALCULATE_FUEL_SAVINGS:
       newState = objectAssign({}, state);
-      newState[action.fieldName] = action.value;
-      newState.necessaryDataIsProvidedToCalculateSavings = necessaryDataIsProvidedToCalculateSavings(newState);
-      newState.dateModified = action.dateModified;
+      newState.fuelSavings[action.fieldName] = action.value;
+      newState.fuelSavings.necessaryDataIsProvidedToCalculateSavings = necessaryDataIsProvidedToCalculateSavings(action.settings);
+      newState.fuelSavings.dateModified = action.dateModified;
 
       if (newState.necessaryDataIsProvidedToCalculateSavings) {
-        newState.savings = calculateSavings(newState);
+        newState.fuelSavings.savings = calculateSavings(newState);
       }
 
-      return newState;
+      return objectAssign({}, newState);
 
     default:
       return state;
