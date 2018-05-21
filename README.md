@@ -2,6 +2,8 @@
 
 Provides simple search capabilities to the Etsy API interface.
 
+[Click here for a live demo!](https://etsy-react-client.surge.sh)
+
 ---
 
 ## Features:

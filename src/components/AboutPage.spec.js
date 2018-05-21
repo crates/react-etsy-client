@@ -6,7 +6,7 @@ describe('<AboutPage />', () => {
   it('should have a header called \'About\'', () => {
     const wrapper = shallow(<AboutPage />);
     const actual = wrapper.find('h2').text();
-    const expected = 'About';
+    const expected = 'About Michael "Crates" McDade';
 
     expect(actual).toEqual(expected);
   });
