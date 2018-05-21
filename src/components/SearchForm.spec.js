@@ -36,7 +36,7 @@ function getFuelSavings (args) {
   };
 }
 
-describe('<SearchForm />', () => {
+describe.skip('<SearchForm />', () => {
   it('should contain <TextInput /> components', () => {
     const fuelSavings = getFuelSavings();
     const wrapper = shallow(<SearchForm

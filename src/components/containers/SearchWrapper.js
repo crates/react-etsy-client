@@ -10,26 +10,26 @@ export class SearchWrapper extends React.Component {
     super(props, context);
 
     this.onSearch = this.onSearch.bind(this);
-    this.calculateFuelSavings = this.calculateFuelSavings.bind(this);
+    this.updateQuery = this.updateQuery.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.actions.fetchAllListings();
   }
 
   onSearch () {
-    this.props.actions.onSearch(this.props.fuelSavings);
+    this.props.actions.onSearch(this.props.query);
   }
 
-  calculateFuelSavings (e) {
-    this.props.actions.calculateFuelSavings(this.props.fuelSavings, e.target.name, e.target.value);
+  updateQuery (e) {
+    this.props.actions.updateQuery(this.props.query, e.target.name, e.target.value);
   }
 
   render () {
     return (
       <SearchForm
         onSearch={this.onSearch}
-        onChange={this.calculateFuelSavings}
+        onChange={this.updateQuery}
         query={this.props.query}
         listings={this.props.listings}
       />
@@ -40,7 +40,7 @@ export class SearchWrapper extends React.Component {
 SearchWrapper.propTypes = {
   actions: PropTypes.object.isRequired,
   query: PropTypes.string,
-  listings: PropTypes.object.isRequired
+  listings: PropTypes.object
 };
 
 function mapStateToProps (state) {

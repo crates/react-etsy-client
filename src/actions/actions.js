@@ -1,5 +1,4 @@
 import * as types from '../constants/actionTypes';
-import {getFormattedDateTime} from '../utils/dates';
 import EtsyJsonp from '../utils/etsyApi';
 
 const etsyApi = new EtsyJsonp();
@@ -23,33 +22,17 @@ export const onSearch = (settings) => { // example of a thunk using the redux-th
     // thunks allow for pre-processing actions, calling apis, and dispatching multiple actions
     // in this case at this point we could call a service that would persist the fuel savings
     return dispatch({
-      type: types.SAVE_FUEL_SAVINGS,
-      dateModified: getFormattedDateTime(),
+      type: types.ON_SEARCH,
       settings
     });
   };
 };
 
-export const calculateFuelSavings = (settings, fieldName, value) => {
+export const updateQuery = (settings, fieldName, value) => {
   return {
-    type: types.CALCULATE_FUEL_SAVINGS,
-    dateModified: getFormattedDateTime(),
+    type: types.UPDATE_QUERY,
     settings,
     fieldName,
     value
   };
 };
-
-// export const fetchListings = () => {
-//   return (dispatch) => {
-//     const url = '/referencedata/currencies';
-//
-//     return $.get(url)
-//       .then(response => {
-//         dispatch({
-//           type: types.SAVE_FUEL_SAVINGS,
-//           data: response
-//         });
-//       });
-//   };
-// };

@@ -1,31 +1,70 @@
 import React from 'react';
 import {func, string, object} from 'prop-types';
 import SearchResults from './SearchResults';
-import TextInput from './TextInput';
-import {fuelSavings} from '../types';
+// import TextInput from './TextInput';
+// import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+// import {fuelSavings} from '../types';
+//
+// const styles = theme => ({
+//   container: {
+//     display: 'flex',
+//     flexWrap: 'wrap',
+//   },
+//   textField: {
+//     marginLeft: theme.spacing.unit,
+//     marginRight: theme.spacing.unit,
+//     width: 200,
+//   },
+//   menu: {
+//     width: 200
+//   }
+// });
 
-const SearchForm = ({query, listings = {results: []}, onSearch, onChange}) => (
-  <div>
-    <h2>Etsy Products</h2>
-    <table>
-      <tbody>
-        <tr>
-          <td><label htmlFor="query">Search Query</label></td>
-          <td><TextInput onChange={onChange} name="query" value={query} /></td>
-          <td><input type="submit" value="Search" onClick={onSearch} /></td>
-        </tr>
-      </tbody>
-    </table>
+export default class SearchForm extends React.Component {
+  constructor (props, context) {
+    super(props, context);
 
-    {!!listings.results.length && <SearchResults listings={listings} />}
-  </div>
-);
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-SearchForm.propTypes = {
-  onSaveClick: func.isRequired,
-  onChange: func.isRequired,
-  query: string,
-  listings: object
-};
+  static get propTypes () {
+    return {
+      onChange: func.isRequired,
+      onSearch: func.isRequired,
+      query: string,
+      listings: object
+    };
+  }
 
-export default SearchForm;
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    });
+  };
+
+  render () {
+    const {query, listings = {results: []}, onSearch} = this.props;
+
+    return (
+      <div>
+        <h2>Etsy Product Search</h2>
+
+        <TextField
+          id="full-width"
+          label="Search Term"
+          InputLabelProps={{
+            shrink: true
+          }}
+          placeholder="Enter a search term here"
+          fullWidth={true}
+          margin="normal"
+          defaultValue={query}
+        />
+        <input type="submit" value="Search" onClick={onSearch} />
+
+        {!!listings.results.length && <SearchResults listings={listings} />}
+      </div>
+    );
+  }
+}

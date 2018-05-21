@@ -1,5 +1,5 @@
 // Centralized propType definitions
-import { shape, number, bool, string, oneOfType } from 'prop-types';
+// import { shape, number, bool, string, oneOfType } from 'prop-types';
 
 // export const listings = shape({
 //   newMpg: oneOfType([number, string]),

@@ -4,7 +4,6 @@ import {Route, Switch, Link} from 'react-router-dom';
 import {hot} from 'react-hot-loader';
 import PropTypes from 'prop-types';
 
-import HomePage from './HomePage';
 import AboutPage from './AboutPage';
 import NotFoundPage from './NotFoundPage';
 import SearchWrapper from './containers/SearchWrapper';
@@ -59,13 +58,12 @@ class App extends React.Component { // Class-based, as React's hot reloading cur
             value={value}
             onChange={this.handleChange}
           >
-            <Tab label="Welcome" component={Link} to="/" />
-            <Tab label="Search Etsy Catalog" component={Link} to="/search" />
+            <Tab label="Search Etsy Catalog" component={Link} to="/" />
             <Tab label="About the Developer" component={Link} to="/about" />
           </Tabs>
         </AppBar>
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/" component={SearchWrapper} />
           <Route path="/search" component={SearchWrapper} />
           <Route path="/about" component={AboutPage} />
           <Route component={NotFoundPage} />
