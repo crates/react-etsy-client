@@ -19,10 +19,9 @@ export class SearchWrapper extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (this.state.page !== prevState.page || this.state.query !== prevState.query) {
-      const {page, query} = this.props;
-      this.fetchPage({page, query});
-    }
+    // if (this.props.page !== prevState.page || this.state.query !== prevState.query) {
+    //   this.onSearch();
+    // }
   }
 
   componentDidMount () {
@@ -30,13 +29,15 @@ export class SearchWrapper extends React.Component {
   }
 
   onSearch () {
-    const {page, query} = this.props;
+    const {page} = this.props;
+    const {query} = this.state;
     this.props.actions.fetchListings({page, query});
   }
 
   updateQuery (e) {
-    // this.setState({query: e.target.value});
-    this.props.actions.updateQuery(e.target.value);
+    this.props.actions.updatePage(1);
+    this.setState({query: e.target.value});
+    // this.props.actions.updateQuery(e.target.value);
   }
 
   updatePage (page) {
@@ -49,7 +50,8 @@ export class SearchWrapper extends React.Component {
       <SearchForm
         onSearch={this.onSearch}
         onChange={this.updateQuery}
-        query={this.props.query}
+        query={this.state.query}
+        page={this.props.page}
         listings={this.props.listings}
       />
     );
@@ -59,11 +61,12 @@ export class SearchWrapper extends React.Component {
 SearchWrapper.propTypes = {
   actions: PropTypes.object.isRequired,
   query: PropTypes.string,
+  page: PropTypes.number,
   listings: PropTypes.object
 };
 
 function mapStateToProps (state) {
-  return state.fuelSavings;
+  return state.appReducer;
 }
 
 function mapDispatchToProps (dispatch) {

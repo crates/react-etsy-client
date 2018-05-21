@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { create } from 'react-test-renderer';
-import ConnectedFuelSavingsPage, { SearchWrapper } from './SearchWrapper';
+import ConnectedSearch, { SearchWrapper } from './SearchWrapper';
 import SearchForm from '../SearchForm';
 import initialState from '../../reducers/initialState';
 
@@ -28,15 +28,15 @@ describe('<SearchWrapper />', () => {
     const wrapper = mount(
       <SearchWrapper
         actions={actions}
-        fuelSavings={initialState.fuelSavings}
+        listings={initialState.listings}
       />
     );
 
     const save = wrapper.find('input[type="submit"]');
     save.simulate('click');
 
-    expect(actions.saveFuelSavings).toHaveBeenCalledWith(
-      initialState.fuelSavings
+    expect(actions.onSearch).toHaveBeenCalledWith(
+      initialState.listings
     );
   });
 
@@ -44,7 +44,7 @@ describe('<SearchWrapper />', () => {
     const wrapper = mount(
       <SearchWrapper
         actions={actions}
-        fuelSavings={initialState.fuelSavings}
+        listings={initialState.listings}
       />
     );
     const name = 'newMpg';
@@ -53,8 +53,8 @@ describe('<SearchWrapper />', () => {
     const input = wrapper.find('input[name="newMpg"]');
     input.simulate('change', { target: { name, value } });
 
-    expect(actions.calculateFuelSavings).toHaveBeenCalledWith(
-      initialState.fuelSavings,
+    expect(actions.updateQuery).toHaveBeenCalledWith(
+      initialState.listings,
       name,
       value
     );
@@ -64,7 +64,7 @@ describe('<SearchWrapper />', () => {
     const store = configureMockStore()(initialState);
     const component = create(
       <Provider store={store}>
-        <ConnectedFuelSavingsPage />
+        <ConnectedSearch />
       </Provider>
     );
     const tree = component.toJSON();

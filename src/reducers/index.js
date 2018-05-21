@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import fuelSavings from './appReducer';
+import appReducer from './appReducer';
 import { routerReducer } from 'react-router-redux';
 
 const rootReducer = combineReducers({
-  fuelSavings,
+  appReducer,
   routing: routerReducer
 });
 

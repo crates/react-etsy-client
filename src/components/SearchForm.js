@@ -1,44 +1,30 @@
 import React from 'react';
-import {func, string, object} from 'prop-types';
+import {func, string, object, number} from 'prop-types';
 import SearchResults from './SearchResults';
 import TextField from '@material-ui/core/TextField';
-// import {fuelSavings} from '../types';
+import Button from '@material-ui/core/Button';
 
 export default class SearchForm extends React.Component {
-  constructor (props, context) {
-    super(props, context);
-
-    this.handleChange = this.handleChange.bind(this);
-  }
-
   static get propTypes () {
     return {
       onChange: func.isRequired,
       onSearch: func.isRequired,
       query: string,
+      page: number,
       listings: object
     };
   }
 
-  handleChange = name => event => {
-    debugger;
-    this.props.onChange(event);
-    // console.log(event.target.value);
-    // this.setState({
-    //   [name]: event.target.value
-    // });
-  };
-
   render () {
-    const {query, listings = {results: []}, onSearch} = this.props;
+    const {query, listings = {results: []}, onSearch, page} = this.props;
 
     return (
       <div>
         <h2>Etsy Product Search</h2>
+        <h3>Results Page {page}</h3>
 
         <TextField
           id="full-width"
-          ref="search"
           label="Search Term"
           InputLabelProps={{
             shrink: true
@@ -47,9 +33,15 @@ export default class SearchForm extends React.Component {
           fullWidth={true}
           margin="normal"
           defaultValue={query}
-          onChange={this.handleChange}
+          onChange={(e) => this.props.onChange(e)}
+          onKeyPress={(ev) => {
+            if (ev.key === 'Enter') {
+              this.props.onSearch();
+              ev.preventDefault();
+            }
+          }}
         />
-        <input type="submit" value="Search" onClick={onSearch} />
+        <Button variant="raised" color="primary" onClick={onSearch}>Search</Button>
 
         {!!listings.results.length && <SearchResults listings={listings} />}
       </div>

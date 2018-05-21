@@ -2,7 +2,7 @@ import * as types from '../constants/actionTypes';
 import objectAssign from 'object-assign';
 import initialState from './initialState';
 
-export const appReducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.UPDATE_LISTINGS:
       return objectAssign({}, state, {'listings': action.data});
@@ -18,4 +18,4 @@ export const appReducer = (state = initialState, action) => {
   }
 };
 
-export default appReducer;
+export default reducer;

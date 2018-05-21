@@ -35,9 +35,15 @@ export const onSearch = (settings) => { // example of a thunk using the redux-th
 };
 
 export const updateQuery = (settings, fieldName, value) => {
-  console.log(arguments);
   return {
     type: types.UPDATE_QUERY,
+    value
+  };
+};
+
+export const updatePage = (settings, fieldName, value) => {
+  return {
+    type: types.UPDATE_PAGE,
     value
   };
 };
