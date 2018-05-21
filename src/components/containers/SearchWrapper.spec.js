@@ -9,7 +9,7 @@ import initialState from '../../reducers/initialState';
 
 describe('<SearchWrapper />', () => {
   const actions = {
-    fetchAllListings: jest.fn(),
+    fetchListings: jest.fn(),
     onSearch: jest.fn(),
     updateQuery: jest.fn()
   };

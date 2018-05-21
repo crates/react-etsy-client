@@ -8,7 +8,7 @@ export const appReducer = (state = initialState, action) => {
       return objectAssign({}, state, {'listings': action.data});
 
     case types.UPDATE_QUERY:
-      return objectAssign({}, state, {'query': action.data});
+      return objectAssign({}, state, {'query': action.value});
 
     case types.ON_SEARCH:
       return objectAssign({}, state, {'listings': action.data});

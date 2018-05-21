@@ -1,25 +1,8 @@
 import React from 'react';
 import {func, string, object} from 'prop-types';
 import SearchResults from './SearchResults';
-// import TextInput from './TextInput';
-// import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 // import {fuelSavings} from '../types';
-//
-// const styles = theme => ({
-//   container: {
-//     display: 'flex',
-//     flexWrap: 'wrap',
-//   },
-//   textField: {
-//     marginLeft: theme.spacing.unit,
-//     marginRight: theme.spacing.unit,
-//     width: 200,
-//   },
-//   menu: {
-//     width: 200
-//   }
-// });
 
 export default class SearchForm extends React.Component {
   constructor (props, context) {
@@ -38,9 +21,12 @@ export default class SearchForm extends React.Component {
   }
 
   handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    });
+    debugger;
+    this.props.onChange(event);
+    // console.log(event.target.value);
+    // this.setState({
+    //   [name]: event.target.value
+    // });
   };
 
   render () {
@@ -52,6 +38,7 @@ export default class SearchForm extends React.Component {
 
         <TextField
           id="full-width"
+          ref="search"
           label="Search Term"
           InputLabelProps={{
             shrink: true
@@ -60,6 +47,7 @@ export default class SearchForm extends React.Component {
           fullWidth={true}
           margin="normal"
           defaultValue={query}
+          onChange={this.handleChange}
         />
         <input type="submit" value="Search" onClick={onSearch} />
 

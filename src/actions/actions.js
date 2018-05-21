@@ -3,17 +3,23 @@ import EtsyJsonp from '../utils/etsyApi';
 
 const etsyApi = new EtsyJsonp();
 
-export const fetchAllListings = () => {
+export const fetchListings = ({page, query} = {}) => {
   return (dispatch) => {
-    return etsyApi.get({
+    const options = {
       path: 'listings/active',
+      params: {},
       success: (info) => {
         dispatch({
           type: types.UPDATE_LISTINGS,
           data: info.response
         });
       }
-    });
+    };
+
+    if (page) options.params.page = page;
+    if (query) options.params.keywords = query;
+
+    return etsyApi.get(options);
   };
 };
 
@@ -29,10 +35,9 @@ export const onSearch = (settings) => { // example of a thunk using the redux-th
 };
 
 export const updateQuery = (settings, fieldName, value) => {
+  console.log(arguments);
   return {
     type: types.UPDATE_QUERY,
-    settings,
-    fieldName,
     value
   };
 };

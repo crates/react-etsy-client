@@ -11,18 +11,37 @@ export class SearchWrapper extends React.Component {
 
     this.onSearch = this.onSearch.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
+    this.updatePage = this.updatePage.bind(this);
+    this.state = {
+      page: 1,
+      query: ''
+    };
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.state.page !== prevState.page || this.state.query !== prevState.query) {
+      const {page, query} = this.props;
+      this.fetchPage({page, query});
+    }
   }
 
   componentDidMount () {
-    this.props.actions.fetchAllListings();
+    this.props.actions.fetchListings();
   }
 
   onSearch () {
-    this.props.actions.onSearch(this.props.query);
+    const {page, query} = this.props;
+    this.props.actions.fetchListings({page, query});
   }
 
   updateQuery (e) {
-    this.props.actions.updateQuery(this.props.query, e.target.name, e.target.value);
+    // this.setState({query: e.target.value});
+    this.props.actions.updateQuery(e.target.value);
+  }
+
+  updatePage (page) {
+    this.props.actions.updatePage(page);
+    this.onSearch();
   }
 
   render () {
