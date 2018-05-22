@@ -9,6 +9,7 @@ export default class SearchForm extends React.Component {
     return {
       onChange: func.isRequired,
       onSearch: func.isRequired,
+      updatePage: func.isRequired,
       query: string,
       page: number,
       listings: object

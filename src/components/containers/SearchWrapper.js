@@ -50,6 +50,7 @@ export class SearchWrapper extends React.Component {
       <SearchForm
         onSearch={this.onSearch}
         onChange={this.updateQuery}
+        updatePage={this.updatePage}
         query={this.state.query}
         page={this.props.page}
         listings={this.props.listings}

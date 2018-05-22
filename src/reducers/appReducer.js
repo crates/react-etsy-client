@@ -10,6 +10,9 @@ export const reducer = (state = initialState, action) => {
     case types.UPDATE_QUERY:
       return objectAssign({}, state, {'query': action.value});
 
+    case types.UPDATE_PAGE:
+      return objectAssign({}, state, {'page': action.value});
+
     case types.ON_SEARCH:
       return objectAssign({}, state, {'listings': action.data});
 
